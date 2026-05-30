@@ -83,7 +83,7 @@ async function whitenSvg(file) {
   const hasViewBox = /viewBox\s*=/i.test(open);
   const hasSize = /\bwidth\s*=/i.test(open) && /\bheight\s*=/i.test(open);
   const warn = (hasViewBox || hasSize) ? null
-    : 'No viewBox or width/height — white rect may not fill. Add dimensions.';
+    : 'No viewBox or width/height – white rect may not fill. Add dimensions.';
   const blob = new Blob([out], { type: 'image/svg+xml' });
   return {
     name: file.name, type: 'svg', outBlob: blob,
@@ -141,3 +141,29 @@ function triggerDownload(blob, name) {
 function escapeHtml(s) {
   return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
+
+// ---- soap-bubble cursor trail ----
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  let last = 0;
+  function spawn(x, y) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 8 + Math.random() * 14;
+    b.style.width = b.style.height = size.toFixed(1) + 'px';
+    b.style.left = (x + (Math.random() * 14 - 7)).toFixed(1) + 'px';
+    b.style.top  = (y + (Math.random() * 14 - 7)).toFixed(1) + 'px';
+    b.style.setProperty('--dx', (Math.random() * 40 - 20).toFixed(0) + 'px');
+    b.style.setProperty('--dur', (900 + Math.random() * 600).toFixed(0) + 'ms');
+    document.body.appendChild(b);
+    b.addEventListener('animationend', () => b.remove());
+  }
+  window.addEventListener('pointermove', e => {
+    if (e.pointerType === 'touch') return;
+    const now = performance.now();
+    if (now - last < 70) return;      // throttle: ~14 bubbles/sec max
+    last = now;
+    spawn(e.clientX, e.clientY);
+  }, { passive: true });
+})();
