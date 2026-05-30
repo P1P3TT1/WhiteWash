@@ -37,10 +37,36 @@
   <div class="grid" id="grid"></div>
 
   <footer>
-    <b>Private by design.</b> Everything runs in your browser – no image is ever uploaded to a server.
-    <br><b>How it works.</b> PNG: a white layer is composited under the alpha channel via canvas, then re-encoded as PNG.
-    SVG: <code>&lt;rect width="100%" height="100%" fill="#fff"/&gt;</code> is inserted as the first child, so it renders behind everything.
-    <br><b>One caveat.</b> An SVG without a <code>viewBox</code> or explicit width/height can't resolve <code>100%</code>; those are flagged below and may need fixed dimensions.
+    <details class="care">
+      <summary class="care-tag">
+        <span class="tub-glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <defs>
+              <clipPath id="tubClip">
+                <path d="M4 9 L5.2 18.5 Q5.4 19.5 6.4 19.5 L17.6 19.5 Q18.6 19.5 18.8 18.5 L20 9 Z"/>
+              </clipPath>
+            </defs>
+            <rect class="water" x="2" y="20" width="20" height="13" clip-path="url(#tubClip)"/>
+            <path class="tub" d="M4 9 L5.2 18.5 Q5.4 19.5 6.4 19.5 L17.6 19.5 Q18.6 19.5 18.8 18.5 L20 9"
+                  fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path class="wave" d="M4 9 Q7 6.6 10 8.4 T16 8.4 T20 9"
+                  fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="care-label">Wash &amp; care instructions</span>
+        <span class="bubble-toggle" aria-hidden="true">
+          <span class="b b-main"></span>
+          <span class="b b-s1"></span>
+          <span class="b b-s2"></span>
+        </span>
+      </summary>
+      <div class="care-body">
+        <b>Private by design.</b> Everything runs in your browser – no image is ever uploaded to a server.
+        <br><b>How it works.</b> PNG: a white layer is composited under the alpha channel via canvas, then re-encoded as PNG.
+        SVG: <code>&lt;rect width="100%" height="100%" fill="#fff"/&gt;</code> is inserted as the first child, so it renders behind everything.
+        <br><b>One caveat.</b> A SVG without a <code>viewBox</code> or explicit width/height can't resolve <code>100%</code>; those are flagged and may need fixed dimensions.
+      </div>
+    </details>
   </footer>
 </div>
 </body>

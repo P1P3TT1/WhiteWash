@@ -202,3 +202,72 @@
     100% { opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 56px)) scale(1.28); }
   }
   @media (prefers-reduced-motion: reduce) { .bubble { display: none; } }
+
+/* ---- care-label disclosure ---- */
+.care { margin-top: 16px; }
+
+/* the stitched fabric tag */
+summary.care-tag {
+  list-style: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--mint-deep); background: var(--porcelain);
+  padding: 9px 15px; border-radius: 10px;
+  border: 1.5px dashed var(--line);
+  box-shadow: inset 0 0 0 3px var(--porcelain), inset 0 0 0 4.5px #cad9e580; /* double-stitch */
+  transform: rotate(-1.2deg); transform-origin: left center;       /* sewn-on tilt */
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+summary.care-tag::-webkit-details-marker { display: none; }        /* Safari triangle */
+summary.care-tag:hover {
+  border-color: var(--mint); transform: rotate(-1.2deg) translateY(-1px);
+  box-shadow: inset 0 0 0 3px var(--porcelain), inset 0 0 0 4.5px #1fae9355,
+              0 8px 18px -12px #16314a55;                          /* corner lifts */
+}
+.care[open] summary.care-tag {
+  border-style: solid; border-color: var(--mint); transform: rotate(0deg);
+}
+
+/* wash-tub glyph, fills on hover */
+.tub-glyph { width: 19px; height: 19px; flex: none; color: var(--mint-deep); display: inline-flex; }
+.tub-glyph svg { width: 100%; height: 100%; overflow: visible; }
+.tub-glyph .water {
+  fill: var(--mint); opacity: .55; transform: translateY(0);
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+summary.care-tag:hover .tub-glyph .water { transform: translateY(-10px); }  /* water rises */
+
+/* bubble chevron that splits into a puff when open */
+.bubble-toggle { position: relative; width: 16px; height: 16px; margin-left: 2px; flex: none; }
+.bubble-toggle .b {
+  position: absolute; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #ffffffe6 0 8%, transparent 30%),
+    radial-gradient(circle at 50% 50%, transparent 0 52%, #ffffff80 68%, #c3d8e666 80%, transparent 88%),
+    radial-gradient(circle at 62% 66%, var(--mint) 0 12%, transparent 46%);
+  box-shadow: inset 0 0 4px #ffffff80;
+  transition: transform .3s ease, opacity .3s ease;
+}
+.bubble-toggle .b-main { inset: 1px; }
+.bubble-toggle .b-s1, .bubble-toggle .b-s2 {
+  width: 7px; height: 7px; top: 5px; left: 5px; transform: scale(0); opacity: 0;
+}
+.care[open] .bubble-toggle .b-main { transform: scale(.55); }
+.care[open] .bubble-toggle .b-s1 { transform: translate(-6px,-5px) scale(1); opacity: 1; }
+.care[open] .bubble-toggle .b-s2 { transform: translate(7px,4px) scale(1); opacity: 1; }
+
+/* expanded panel */
+.care-body {
+  margin-top: 14px; max-width: 62ch; font-size: 11.5px; line-height: 1.75;
+  color: var(--soft); animation: care-in .25s ease both;
+}
+.care-body p + p { margin-top: 8px; }
+.care-body b { color: var(--deep); }
+.care-body code { background: var(--porcelain); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--line); }
+@keyframes care-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  summary.care-tag, .tub-glyph .water, .bubble-toggle .b { transition: none; }
+  .care-body { animation: none; }
+  summary.care-tag, .care[open] summary.care-tag { transform: none; }
+}
