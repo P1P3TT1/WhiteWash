@@ -1,0 +1,141 @@
+:root {
+    --paper: #f3efe6;
+    --paper-deep: #e9e3d6;
+    --ink: #1c1a17;
+    --ink-soft: #57514a;
+    --accent: #c8452f;
+    --accent-deep: #9e3322;
+    --line: #cfc7b6;
+    --white-chip: #ffffff;
+    --shadow: 0 1px 0 #fff8, 0 12px 30px -16px #1c1a1740;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 12% 18%, #fff6 0, transparent 40%),
+      radial-gradient(circle at 88% 8%, #fff4 0, transparent 35%);
+    color: var(--ink);
+    min-height: 100%;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 56px 28px 96px; }
+
+  header { margin-bottom: 40px; }
+  .kicker {
+    font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--accent-deep); font-weight: 600; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before {
+    content: ""; width: 38px; height: 2px; background: var(--accent); display: inline-block;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 8vw, 78px);
+    line-height: 0.92; letter-spacing: -0.02em; color: var(--ink);
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede {
+    margin-top: 18px; max-width: 56ch; color: var(--ink-soft); font-size: 15px;
+  }
+
+  .drop {
+    margin-top: 36px; border: 2px dashed var(--line); border-radius: 18px;
+    background: linear-gradient(180deg, #fffefb 0%, var(--paper-deep) 100%);
+    padding: 48px 32px; text-align: center; cursor: pointer;
+    transition: border-color .2s, background .2s, transform .15s;
+    box-shadow: var(--shadow);
+  }
+  .drop:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .drop.drag { border-color: var(--accent); background: #fff; border-style: solid; }
+  .drop h2 {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 26px; letter-spacing: -0.01em;
+  }
+  .drop p { color: var(--ink-soft); font-size: 13px; margin-top: 8px; }
+  .drop .pick {
+    display: inline-block; margin-top: 20px; background: var(--ink); color: var(--paper);
+    padding: 11px 22px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .drop .swatch {
+    width: 46px; height: 46px; border-radius: 12px; margin: 0 auto 18px;
+    background:
+      conic-gradient(#d9d2c4 90deg, transparent 90deg 180deg, #d9d2c4 180deg 270deg, transparent 270deg);
+    background-size: 14px 14px; background-color: #fff;
+    border: 1px solid var(--line); position: relative; overflow: hidden;
+  }
+  .drop .swatch::after {
+    content: ""; position: absolute; inset: 0; left: 50%;
+    background: #fff; border-left: 1px solid var(--line);
+  }
+
+  .toolbar {
+    display: none; margin-top: 32px; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding-bottom: 18px; border-bottom: 1px solid var(--line);
+  }
+  .toolbar.show { display: flex; }
+  .count { font-size: 13px; color: var(--ink-soft); margin-right: auto; }
+  .count b { color: var(--ink); }
+  button.action {
+    font-family: inherit; font-size: 13px; font-weight: 500; letter-spacing: 0.03em;
+    border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    padding: 10px 20px; border-radius: 999px; cursor: pointer; transition: .15s;
+  }
+  button.action:hover { background: var(--accent); border-color: var(--accent); }
+  button.ghost { background: transparent; color: var(--ink); }
+  button.ghost:hover { background: var(--paper-deep); color: var(--ink); border-color: var(--ink); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+
+  .grid {
+    margin-top: 28px; display: grid; gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .card {
+    background: #fffefb; border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  }
+  .preview { position: relative; aspect-ratio: 1.3; display: flex; }
+  .half { flex: 1; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .half.before {
+    background-color: #fff;
+    background-image:
+      linear-gradient(45deg, #e2dccd 25%, transparent 25%),
+      linear-gradient(-45deg, #e2dccd 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #e2dccd 75%),
+      linear-gradient(-45deg, transparent 75%, #e2dccd 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  }
+  .half.after { background: #fff; border-left: 1px solid var(--line); }
+  .half img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .tag {
+    position: absolute; top: 8px; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-soft); background: #fffd; padding: 2px 7px; border-radius: 5px;
+  }
+  .tag.l { left: 8px; } .tag.r { right: 8px; color: var(--accent-deep); }
+  .meta { padding: 12px 14px; border-top: 1px solid var(--line); }
+  .fname {
+    font-size: 12px; font-weight: 500; word-break: break-all; line-height: 1.4;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .badge {
+    font-size: 9px; padding: 2px 6px; border-radius: 5px; letter-spacing: 0.08em;
+    background: var(--paper-deep); color: var(--ink-soft); flex-shrink: 0;
+  }
+  .badge.png { background: #e8e0d0; }
+  .badge.svg { background: #f0d9c9; color: var(--accent-deep); }
+  .meta .row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .meta .note { font-size: 10px; color: var(--ink-soft); }
+  a.dl {
+    font-size: 11px; font-weight: 500; color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--accent); padding-bottom: 1px;
+  }
+  a.dl:hover { color: var(--accent); }
+  .warn { color: var(--accent-deep); font-size: 10px; margin-top: 6px; }
+
+  footer { margin-top: 64px; font-size: 11px; color: var(--ink-soft); line-height: 1.7; }
+  footer b { color: var(--ink); }
+  input[type=file] { display: none; }
